@@ -1,0 +1,85 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/19871652-a0c4-4a69-90a4-cdb773a6ecf3/ # 
+version: 1.0.0
+title: American Flights API
+
+types:
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
+  
+
+/flights:
+  description: Flight data
+  displayName: List Of Flights
+  get:
+    description: returns a list of flights
+    queryParameters:
+      destination:
+        description: Three-character airport code
+        required: false
+        enum: 
+          - SFO 
+          - LAX
+          - CLE
+    responses:
+      200:
+        body:
+          application/json:
+            type: AmericanFlight[]
+            examples:
+              output1: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml
+              output2: 
+                  -
+                    ID: 1 
+                    code: ER38sd
+                    price: 400
+                    departureDate: 2017/07/26
+                    origin: CLE
+                    destination: SFO
+                    emptySeats: 0
+                    plane: 
+                      type: Boeing 737
+                      totalSeats: 150
+               
+
+  /{ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: AmericanFlight
+              example: !include examples/AmericanFlightExample.raml
+                
+                
+    patch:
+    delete:
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              properties:
+                message: string
+              example:
+                message: flight deleted
+  post:
+    responses:
+      201:
+        body:
+          application/json:
+            example: 
+              message: flight created
+    body:
+      application/json:
+        type: !include types/AmericanDataTypeNew.raml
+        examples: 
+          input: !include examples/AmericanFlightNoIDExample.raml
+
+        
+          
+      
+    
+/aircraft:
+  get:
+  patch:
+    

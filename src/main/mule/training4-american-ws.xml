@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e43e9223-8662-4a5c-81af-31ea34428a78" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="fe37f252-e68c-409d-be5b-a57d8611f41f" >
+		<db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
+	</db:config>
+	<flow name="getFlightsFlow" doc:id="6d4e19db-a9d6-4143-921f-c006d79168e7" >
+		<db:select doc:name="Select" doc:id="55e988e2-77fe-4403-b910-55f4845d8188" config-ref="Database_Config">
+			<db:sql >select * from american</db:sql>
+		</db:select>
+		<logger level="INFO" doc:name="Logger" doc:id="12573096-8b8a-4be8-b6af-c9865a5e4a44" message="test"/>
+		<ee:transform doc:name="Transform Message" doc:id="ffd628bf-357a-45b7-ae49-0952b6b437a7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	ID: payload01.ID,
+	code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+	price: payload01.price default 0,
+	departureDate: payload01.takeOffDate as String default "",
+	origin: payload01.fromAirport default "",
+	destination: payload01.toAirport default "",
+	emptySeats: payload01.seatsAvailable default 0,
+	plane: {
+		"type": payload01.planeType default "",
+		totalSeats: payload01.totalSeats default 0
+	}
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="timetest" ><![CDATA[%dw 2.0
+output application/json
+---
+1571951539 as DateTime {format: "MM/dd/yyyy h:m a"}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+	<flow name="getFlightByIdFlow" doc:id="dd8107c9-4caa-4560-8bc2-198caa981300" >
+		<db:select doc:name="Copy_of_Select" doc:id="0581a0e3-5bf9-4f10-9370-e1738f2008c0" config-ref="Database_Config" >
+			<db:sql >select * from american where ID = :ID</db:sql>
+			<db:input-parameters ><![CDATA[#[{'ID' : attributes.uriParams.ID}]]]></db:input-parameters>
+		</db:select>
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="42f309a3-1261-4a2a-ae49-6f60e14c185d" message="test" />
+		<ee:transform doc:name="Copy_of_Transform Message" doc:id="68b40f27-bc3d-425a-9c98-0edbbdbcd251" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	ID: payload01.ID,
+	code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+	price: payload01.price default 0,
+	departureDate: payload01.takeOffDate as String default "",
+	origin: payload01.fromAirport default "",
+	destination: payload01.toAirport default "",
+	emptySeats: payload01.seatsAvailable default 0,
+	plane: {
+		"type": payload01.planeType default "",
+		totalSeats: payload01.totalSeats default 0
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="postFlightFlow" doc:id="ebd8b524-f86e-4f07-a869-e3866b50ea1b" >
+		<ee:transform doc:name="Transform Message" doc:id="58d9b02f-cb1c-47eb-957f-aa559c3c2459" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "Flight added (but not really)"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
