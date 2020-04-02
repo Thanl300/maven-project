@@ -43,6 +43,7 @@ output application/json
 1571951539 as DateTime {format: "MM/dd/yyyy h:m a"}]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="64842d72-c82e-458c-8b1a-6925f7dddf6b" />
 	</flow>
 	<flow name="getFlightByIdFlow" doc:id="dd8107c9-4caa-4560-8bc2-198caa981300" >
 		<db:select doc:name="Copy_of_Select" doc:id="0581a0e3-5bf9-4f10-9370-e1738f2008c0" config-ref="Database_Config" >
