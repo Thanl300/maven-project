@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="training4-american-ws-test-suite.xml" />
+	<munit:test name="training4-american-ws-test-suite-getFlightsFlowTest" doc:id="58700165-9efb-49ff-b55d-c9ff24852a65" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getFlightsFlow" doc:id="9c609aac-4dbc-4166-9ca5-dec503eea4c8" name="getFlightsFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="0e1614ea-d71a-4b0f-9265-8e7f7dcdd5c0" expression="#[payload]" is="#[MunitTools::notNullValue()]" message="the payload is null"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
