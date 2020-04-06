@@ -149,6 +149,7 @@ output application/json
             </ee:variables>
         </ee:transform>
         <logger level="INFO" message="patch:\flights\(ID):american-flights-api-config" />
+		<logger level="INFO" doc:name="Logger" doc:id="73798510-ddcd-48d4-8d1f-ed1f31d527f9" />
     </flow>
     <flow name="get:\aircraft:american-flights-api-config">
         <logger level="INFO" message="get:\aircraft:american-flights-api-config" />
