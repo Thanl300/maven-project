@@ -28,8 +28,8 @@
             <configuration>
                     <sharedLibraries>
                         <sharedLibrary>
-                            <groupId>com.mycompany</groupId>
-                            <artifactId>mysql-connector-java-8.0.19</artifactId>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
                         </sharedLibrary>
                     </sharedLibraries>
                 </configuration>
@@ -99,9 +99,9 @@
             <scope>test</scope>
         </dependency>
     	<dependency>
-            <groupId>com.mycompany</groupId>
-            <artifactId>mysql-connector-java-8.0.19</artifactId>
-            <version>0.1</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.19</version>
         </dependency>
     </dependencies>
 
