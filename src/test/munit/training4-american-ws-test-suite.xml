@@ -16,6 +16,17 @@
 			<munit-tools:assert-that doc:name="Assert that" doc:id="0e1614ea-d71a-4b0f-9265-8e7f7dcdd5c0" expression="#[payload]" is="#[MunitTools::notNullValue()]" message="the payload is null"/>
 		</munit:validation>
 	</munit:test>
+	<munit:test name="training4-american-ws-test-suite-getFlightByIdFlowTest" doc:id="b12bafd8-8673-4fe8-80f8-df88455f307d" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="4da6b856-f1d5-48af-9ddb-892af043b587" >
+				<munit:attributes value='#[{uriParams : {"ID" : "1"}}]' encoding="UTF-8" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to getFlightByIdFlow" doc:id="66e2fdb3-2994-477f-b595-e614bc70a859" name="getFlightByIdFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="c4c26299-a259-42af-96eb-cfef0a3cac4a" expression="#[payload]" is="#[MunitTools::notNullValue()]" message="the payload is null"/>
+		</munit:validation>
+	</munit:test>
 
 
 </mule>

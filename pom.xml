@@ -3,19 +3,21 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
-	<artifactId>training4-american-ws</artifactId>
+	<artifactId>training4-american-ws-tch</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>training4-american-ws</name>
+	<name>training4-american-ws-tch</name>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 		<app.runtime>4.2.1</app.runtime>
-		<mule.maven.plugin.version>3.2.7</mule.maven.plugin.version>
-	<munit.version>2.2.1</munit.version>
+		<mule.maven.plugin.version>3.3.4</mule.maven.plugin.version>
+		<munit.version>2.2.1</munit.version>
+		<uid>thanline309</uid>
+		<pwd>Mutjfd$5</pwd>
+		<mule.version>4.2.1</mule.version>
     </properties>
 
 	<build>
@@ -25,14 +27,31 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
-            <configuration>
+            	<configuration>
                     <sharedLibraries>
                         <sharedLibrary>
                             <groupId>mysql</groupId>
                             <artifactId>mysql-connector-java</artifactId>
                         </sharedLibrary>
                     </sharedLibraries>
+                    <cloudHubDeployment>
+                    	<uri>https://anypoint.mulesoft.com</uri>
+				        <muleVersion>${mule.version}</muleVersion>
+				        <username>${uid}</username>
+				        <password>${pwd}</password>
+					    <applicationName>training4-american-ws-tch</applicationName>
+				        <environment>Sandbox</environment>
+					</cloudHubDeployment>
                 </configuration>
+                <executions>
+			        <execution>
+			            <id>deploy</id>
+			            <phase>deploy</phase>
+			            <goals>
+			                <goal>deploy</goal>
+			            </goals>
+			        </execution>
+			    </executions>
             </plugin>
 		<plugin>
                 <groupId>com.mulesoft.munit.tools</groupId>
